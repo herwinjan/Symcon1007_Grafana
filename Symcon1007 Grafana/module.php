@@ -638,7 +638,7 @@ class Grafana extends IPSModule {
         foreach ($data as $value) {
 
             if ($field == "last") {
-                if (++$i == $ilen) {
+                if (++$i != $ilen) {
                     break;
                 }
 
