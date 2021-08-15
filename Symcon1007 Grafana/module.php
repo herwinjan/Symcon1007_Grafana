@@ -671,7 +671,7 @@
 		foreach($data as $value)	
 			{
 				if ($max>0 && $count>$max)
-						continue;
+						break;
 				$count++;
 							
 			// Kein Offset zZ bei nicht Booleans
