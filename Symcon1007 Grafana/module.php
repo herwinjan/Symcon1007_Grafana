@@ -633,6 +633,7 @@ class Grafana extends IPSModule {
         $count = 0;
         $i = 0;
         $ilen = count($data);
+        $this->SendDebug(__FUNCTION__, "Check: Field:" . $field . " - max: " . $max . " - ilen: $ilen", 0);
 
         foreach ($data as $value) {
 
@@ -643,7 +644,7 @@ class Grafana extends IPSModule {
 
             }
             if ($max > 0) {
-                if ($count > $max) {
+                if ($count > $max - 1) {
                     break;
                 }
 
