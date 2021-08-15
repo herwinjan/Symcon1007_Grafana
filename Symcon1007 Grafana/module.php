@@ -670,8 +670,7 @@
 		
 		foreach($data as $value)	
 			{
-				if ($max>0) 
-					if ($max>$count)
+				if ($max>0 && $count>$max)
 						continue;
 				$count++;
 							
