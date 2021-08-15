@@ -385,7 +385,7 @@
 
 				if ($count > 0) 
 					{
-                    $string = $this->CreateReturnString($data, $target, $typ, $agstufe,$data_additional,$DataOffset,$TimeOffset,$additional_data);
+                    $string = $this->CreateReturnString($data, $target, $typ, $agstufe,$data_additional,$DataOffset,$TimeOffset,$additional_data, $data_maxDataPoints);
                     $this->SendDebug(__FUNCTION__, "Data String:".$string, 0);
 
                     $stringall = $stringall . "" .$string ;
@@ -641,7 +641,7 @@
 	//******************************************************************************
 	//	Rueckgabewerte fuer eine Variable erstellen
 	//******************************************************************************
-	protected function CreateReturnString($data,$target,$typ,$agstufe,$data_data,$DataOffset,$TimeOffset,$additional_data)
+	protected function CreateReturnString($data,$target,$typ,$agstufe,$data_data,$DataOffset,$TimeOffset,$additional_data, $max=0)
 		{
 		
 		$offset = 0;
@@ -666,10 +666,14 @@
 		$target = addslashes($target);
 
 		$string = '{"target":"'.$target.'","datapoints":[';
-			
+		$count=0;
+		
 		foreach($data as $value)	
 			{
-			 
+				if ($max>0) 
+					if ($max>$count)
+						continue;
+				$count++;
 							
 			// Kein Offset zZ bei nicht Booleans
 			// if ($agstufe == 99) 
