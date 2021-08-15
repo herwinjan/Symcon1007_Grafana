@@ -455,10 +455,14 @@ class Grafana extends IPSModule {
 
         if (isset($data['maxReturn']) == true) {
             $AdditionalData['maxReturn'] = $data['maxReturn'];
+        } else {
+            $AdditionalData['maxReturn'] = 0;
         }
 
         if (isset($data['field']) == true) {
             $AdditionalData['field'] = $data['field'];
+        } else {
+            $AdditionalData['field'] = "";
         }
 
         foreach ($AdditionalData as $key => $value) {
