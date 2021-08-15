@@ -329,6 +329,8 @@
 
 				$AggregationsStufe = $additional_data['Aggregationsstufe'];
 				$maxReturn = $additional_data['maxReturn'];
+				$this->SendDebug(__FUNCTION__, "maxReturn:".$maxReturn, 0);
+
 
 				// Besser hier, da fuer jeden Graph eigene Stufe
 				$agstufe = $this->CheckZeitraumForAggregatedValues($data_rangefrom, $data_rangeto,$ID,$AggregationsStufe);
