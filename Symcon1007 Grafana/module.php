@@ -298,7 +298,7 @@ class Grafana extends IPSModule {
                 // $agstufe = 99; // Versuch 1
 
                 // Archivdaten fuer eine Variable holen
-                $data = $this->GetArchivData($ID, $data_rangefrom, $data_rangeto, $agstufe, $typ);
+                $data = $this->GetArchivData($ID, $data_rangefrom, $data_rangeto, $agstufe, $typ, $field);
 
                 if ($data == FALSE) // wird nicht geloggt
                 {
@@ -354,7 +354,7 @@ class Grafana extends IPSModule {
                 $TimeOffset = $additional_data['TimeOffset'];
 
                 if ($count > 0) {
-                    $string = $this->CreateReturnString($data, $target, $typ, $agstufe, $data_additional, $DataOffset, $TimeOffset, $additional_data, $maxReturn, $field);
+                    $string = $this->CreateReturnString($data, $target, $typ, $agstufe, $data_additional, $DataOffset, $TimeOffset, $additional_data);
                     $this->SendDebug(__FUNCTION__, "Data String:" . $string, 0);
 
                     $stringall = $stringall . "" . $string;
@@ -612,7 +612,7 @@ class Grafana extends IPSModule {
     //******************************************************************************
     //    Rueckgabewerte fuer eine Variable erstellen
     //******************************************************************************
-    protected function CreateReturnString($data, $target, $typ, $agstufe, $data_data, $DataOffset, $TimeOffset, $additional_data, $max = 0, $field = "") {
+    protected function CreateReturnString($data, $target, $typ, $agstufe, $data_data, $DataOffset, $TimeOffset, $additional_data) {
 
         $offset = 0;
 
@@ -634,26 +634,22 @@ class Grafana extends IPSModule {
         $target = addslashes($target);
 
         $string = '{"target":"' . $target . '","datapoints":[';
-        $count = 0;
-        $i = 0;
-        $ilen = count($data);
-        $this->SendDebug(__FUNCTION__, "Check: Field:" . $field . " - max: " . $max . " - ilen: $ilen", 0);
 
         foreach ($data as $value) {
+/*
+if ($field == "last") {
+if (++$i !== $ilen) {
+break;
+}
 
-            if ($field == "last") {
-                if (++$i !== $ilen) {
-                    break;
-                }
+}
+if ($max > 0) {
+if ($count > $max - 1) {
+break;
+}
 
-            }
-            if ($max > 0) {
-                if ($count > $max - 1) {
-                    break;
-                }
-
-                $count++;
-            }
+$count++;
+}*/
 
             //if ($max>0 && $count>$max) break;
             //$count++;
@@ -754,7 +750,7 @@ class Grafana extends IPSModule {
     //******************************************************************************
     //    Werte einer Variablen aus dem Archiv holen
     //******************************************************************************
-    protected function GetArchivData($id, $from, $to, $agstufe, $typ) {
+    protected function GetArchivData($id, $from, $to, $agstufe, $typ, $field = "") {
 
         $werte = array();
 
@@ -775,7 +771,12 @@ class Grafana extends IPSModule {
         if ($agstufe == 99) {
             $s = "GetloggedValues" . $archiv . "-" . $id . "-" . $from . "-" . $to;
             $this->SendDebug(__FUNCTION__, $s, 0);
-            $werte = AC_GetLoggedValues($archiv, $id, $from, $to, 0);
+
+            if ($field == "last") {
+                $werte = AC_GetLoggedValues($archiv, $id, 0, 0, 1);
+            } else {
+                $werte = AC_GetLoggedValues($archiv, $id, $from, $to, 0);
+            }
             // print_r($werte);
         } else {
             $s = "GetAggregatedValues:" . $agstufe . "-" . $archiv . "-" . $id . "-" . $from . "-" . $to;
