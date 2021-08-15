@@ -900,7 +900,7 @@ $count++;
 
         if (is_numeric($var) == false) {
             $this->SendDebug(__FUNCTION__, "Variable ist keine Zahl : " . $var, 0);
-            $this->Logmessage("Grafana Variable ID " . $var . " Fehler !", KL_WARNING);
+            //  $this->Logmessage("Grafana Variable ID " . $var . " Fehler !", KL_WARNING);
             return false;
         }
 
