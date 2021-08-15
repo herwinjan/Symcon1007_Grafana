@@ -673,8 +673,8 @@
 		
 		foreach($data as $value)	
 			{
-				if ($max>0 && $count>$max) break;
-			$count++;
+				//if ($max>0 && $count>$max) break;
+			//$count++;
 							
 			// Kein Offset zZ bei nicht Booleans
 			// if ($agstufe == 99) 
