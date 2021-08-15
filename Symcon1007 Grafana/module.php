@@ -84,6 +84,8 @@
 	protected function ProcessHookData()
 		{
 		GLOBAL $_IPS;
+		
+		$maxReturn=0;
 
 		if(!isset($_SERVER['PHP_AUTH_USER']))
 			$_SERVER['PHP_AUTH_USER'] = "";
@@ -326,6 +328,7 @@
 				$RecordLimit = IPS_GetOption('ArchiveRecordLimit') - 1 ;
 
 				$AggregationsStufe = $additional_data['Aggregationsstufe'];
+				$maxReturn = $additional_data['maxReturn'];
 
 				// Besser hier, da fuer jeden Graph eigene Stufe
 				$agstufe = $this->CheckZeitraumForAggregatedValues($data_rangefrom, $data_rangeto,$ID,$AggregationsStufe);
@@ -385,7 +388,7 @@
 
 				if ($count > 0) 
 					{
-                    $string = $this->CreateReturnString($data, $target, $typ, $agstufe,$data_additional,$DataOffset,$TimeOffset,$additional_data, $data_maxDataPoints);
+                    $string = $this->CreateReturnString($data, $target, $typ, $agstufe,$data_additional,$DataOffset,$TimeOffset,$additional_data, $maxReturn);
                     $this->SendDebug(__FUNCTION__, "Data String:".$string, 0);
 
                     $stringall = $stringall . "" .$string ;
@@ -670,7 +673,8 @@
 		
 		foreach($data as $value)	
 			{
-				
+				if ($max>0 && $count>$max) break;
+			$count++;
 							
 			// Kein Offset zZ bei nicht Booleans
 			// if ($agstufe == 99) 
