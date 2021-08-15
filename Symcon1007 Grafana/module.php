@@ -291,7 +291,7 @@ class Grafana extends IPSModule {
                 $AggregationsStufe = $additional_data['Aggregationsstufe'];
                 $maxReturn = $additional_data['maxReturn'];
                 $field = $additional_data['field'];
-                $this->SendDebug(__FUNCTION__, "maxReturn:" . $maxReturn, 0);
+                $this->SendDebug(__FUNCTION__, "RecordLimit:" . $RecordLimit, 0);
 
                 // Besser hier, da fuer jeden Graph eigene Stufe
                 $agstufe = $this->CheckZeitraumForAggregatedValues($data_rangefrom, $data_rangeto, $ID, $AggregationsStufe);
@@ -769,11 +769,14 @@ $count++;
         $aggType = AC_GetAggregationType($archiv, $id);
 
         if ($agstufe == 99) {
-            $s = "GetloggedValues" . $archiv . "-" . $id . "-" . $from . "-" . $to;
+            $s = "GetloggedValues" . $archiv . "-" . $id . "-" . $from . "-" . $to . "-" . $field;
             $this->SendDebug(__FUNCTION__, $s, 0);
 
             if ($field == "last") {
-                $werte = AC_GetLoggedValues($archiv, $id, 0, 0, 1);
+                $w = $letzter_Wert = GetValue($id);
+                $werte = Array();
+                array_push($werte, array("TimeStamp" => $to, "Value" => $w));
+                return $werte;
             } else {
                 $werte = AC_GetLoggedValues($archiv, $id, $from, $to, 0);
             }
