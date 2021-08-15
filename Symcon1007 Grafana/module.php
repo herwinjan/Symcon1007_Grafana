@@ -489,7 +489,10 @@
 		if ( isset($data['DataFilter']) == true )
 			$AdditionalData['DataFilter'] = $data['DataFilter'];
 
-			
+		if ( isset($data['maxReturn']) == true )
+			$AdditionalData['maxReturn'] = $data['maxReturn'];
+
+				
 
 		foreach ($AdditionalData as $key => $value)
 			{
