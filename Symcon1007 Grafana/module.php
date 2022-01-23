@@ -11,8 +11,8 @@
 	//**********************************************************************
 	//	
 	//**********************************************************************
-	class Grafana extends IPSModule
-	{
+class Grafana extends IPSModule
+{
 	//**********************************************************************
 	//
 	//**********************************************************************    
@@ -497,14 +497,14 @@
             // $this->sendtest();
 			return;
 
-			}
+			
 		
 
 		if ($data_app != "dashboard") 	
 			$this->SendDebug(__FUNCTION__."[".__LINE__."]","Unbekanntes Telegramm empfangen bzw Testtelegramm Raw:".$data,0);
 		
 
-		}
+	}
 
 	//******************************************************************************
 	//	Additional JSON Data auswerten
@@ -777,7 +777,7 @@
                    $filter = $additional_data['DataFilter'];    
  
                    $v = str_replace(",", ".", $value['Value']);
-                   if ( $filter > $v)   // sinvoll ?
+                   if ( $filter > $v)   { // sinvoll ?
                         continue;
                         // $this->SendDebug(__FUNCTION__."[".__LINE__."]",$s,0);
                     } else {
@@ -804,7 +804,8 @@
     //******************************************************************************
     //    Rueckgabewerte fuer eine Variable erstellen
     //******************************************************************************
-    protected function CreateReturnString($data, $target, $typ, $agstufe, $data_data, $DataOffset, $TimeOffset, $additional_data) {
+    protected function CreateReturnString($data, $target, $typ, $agstufe, $data_data, $DataOffset, $TimeOffset, $additional_data) 
+	{
 
         $offset = 0;
 
@@ -957,6 +958,7 @@ $count++;
 
 		}
 		
+	}
 
 	//******************************************************************************
 	//	endgueltigen String erstellen
